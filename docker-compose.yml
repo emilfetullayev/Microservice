@@ -45,6 +45,8 @@ services:
     environment:
       MYSQL_DATABASE: user_service
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+
     ports:
       - "3310:3306"
     # Temporarily remove volume to test if volume causes problem
