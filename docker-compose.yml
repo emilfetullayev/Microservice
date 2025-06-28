@@ -47,6 +47,8 @@ services:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3310:3306"
+    volumes:
+      - user_db_data:/var/lib/mysql
     networks:
       - app-network
 
@@ -59,18 +61,22 @@ services:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3308:3306"
+    volumes:
+      - product_db_data:/var/lib/mysql
     networks:
       - app-network
 
   auth-db:
     image: mysql:8
     container_name: auth-db
-    restart: always
-    ports:
-      - "3311:3306"
+    restart: unless-stopped
     environment:
       MYSQL_DATABASE: auth_service
       MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3311:3306"
+    volumes:
+      - auth_db_data:/var/lib/mysql
     networks:
       - app-network
 
@@ -91,3 +97,8 @@ services:
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  user_db_data:
+  product_db_data:
+  auth_db_data:
