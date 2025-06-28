@@ -47,11 +47,11 @@ services:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3310:3306"
-    volumes:
-      - user_db_data:/var/lib/mysql
+    # Temporarily remove volume to test if volume causes problem
+    # volumes:
+    #   - user_db_data:/var/lib/mysql
     networks:
       - app-network
-
   product-db:
     image: mysql:8
     container_name: product-db
