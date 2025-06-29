@@ -13,6 +13,19 @@ services:
     networks:
       - app-network
 
+
+  payment-service:
+    build: ./payment-service
+    container_name: payment-service
+    ports:
+      - "8004:8000"
+    volumes:
+      - ./payment-service:/var/www
+    depends_on:
+      - payment-db
+    networks:
+      - app-network
+
   product-service:
     build: ./product-service
     container_name: product-service
@@ -82,6 +95,21 @@ services:
     networks:
       - app-network
 
+  payment-db:
+    image: mysql:8
+    container_name: payment-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: product_service
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+        - "3312:3306"
+    volumes:
+      - payment_db_data:/var/lib/mysql
+    networks:
+      - app-network
+
+
   nginx:
     image: nginx:alpine
     container_name: nginx-gateway
@@ -104,3 +132,4 @@ volumes:
   user_db_data:
   product_db_data:
   auth_db_data:
+  payment_db_data:
