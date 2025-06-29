@@ -13,20 +13,17 @@ services:
     networks:
       - app-network
 
-
-  payment-service:
-    build: ./payment-service
-    container_name: payment-service
+  product-service:
+    build: ./product-service
+    container_name: product-service
     ports:
-      - "8004:8000"
+      - "8002:8000"
     volumes:
-      - ./payment-service:/var/www
+      - ./product-service:/var/www
     depends_on:
-      - payment-db
+      - product-db
     networks:
       - app-network
-
-
 
   auth-service:
     build:
